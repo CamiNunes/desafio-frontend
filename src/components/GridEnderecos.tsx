@@ -15,6 +15,17 @@ export default function GridEnderecos ({ clienteId } : any){
         })
     };
 
+    async function handleDelete(clienteId: string, logradouroId: string){
+        const response = await api.delete('/api/Logradouros/' + clienteId + '/' + logradouroId )
+        .then(response => {
+            setLogradouros(response.data.result);
+          toast.success("Registro deletado com sucesso.", response.data)
+        
+      }).catch(error => {
+        toast.error("Erro ao deletar registro.", error)
+      })
+    }
+
     useEffect(() => {
         getEnderecos()
         }, []
@@ -45,7 +56,7 @@ export default function GridEnderecos ({ clienteId } : any){
                         <td className="text-left w-auto p-3 text-sm text-gray-700 whitespace-nowrap">{logradouro.uf}</td>
                         <td className="text-right pb-3 pr-3">
                         <Link className="bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold py-2 px-4 rounded" href={`/logradouros/editar/${logradouro.clienteId}`}>Editar</Link> { }
-                        {/* <button className="bg-red-900 hover:bg-red-700 text-white text-sm font-semibold py-2 px-4 rounded" onClick={() => handleDeleteClick(logradouro.clienteId)}>Excluir</button> */}
+                        <button className="bg-red-900 hover:bg-red-700 text-white text-sm font-semibold py-2 px-4 rounded" onClick={() => handleDelete(logradouro.clienteId, logradouro.logradouroId)}>Excluir</button>
                         </td>
                     </tr>
                     ))}
