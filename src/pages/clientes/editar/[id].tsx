@@ -5,11 +5,13 @@ import api from '../../../api';
 import InputMask from "react-input-mask";
 import { toast } from "react-toastify";
 import Link from "next/link";
+import GridEnderecos from "@/components/GridEnderecos";
 
 export default function EditarCliente() {
     const router = useRouter();
     const { id } = router.query;
     const [registro, setRegistro] = useState<any>(null); // Defina o tipo adequado para o seu registro
+    const [logradouros, setLogradouros]=useState([]);
     
     useEffect(() => {
         const fetchRegistro = async () => {
@@ -55,8 +57,10 @@ export default function EditarCliente() {
     if (!registro) {
         return <div>Carregando...</div>;
     }
+
+
     
-  return (
+    return (
     <Page titulo="Editar Cliente" subtitulo="" nomeUsuario="">
         <div className="mt-6 container mx-auto pt-4 shadow rounded-md bg-slate-50">
             <Link href="/clientes/listarClientes">
@@ -128,6 +132,13 @@ export default function EditarCliente() {
                     <button type="button" onClick={handleCancel} className="bg-red-900 hover:bg-red-700 text-white text-sm font-semibold py-2 px-4 rounded">Cancelar</button>
                     <button type="submit" className="bg-sky-800 hover:bg-sky-600 text-white text-sm font-semibold py-2 px-4 rounded">Salvar</button>
                 </div>
+
+                <h4 className="border-b text-lg font-semibold mb-3">Endereços</h4>
+
+                <Link href="/clientes/clientes">
+                    <button type="button" className="rounded-md bg-slate-700 px-3 py-2 text-sm font-semibold leading-6 text-white">Novo Endereço</button>     
+                </Link>   
+                <GridEnderecos clienteId={id}/>
             </form>
         </div>         
     </Page>

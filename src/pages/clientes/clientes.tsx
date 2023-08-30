@@ -10,6 +10,9 @@ export default function Clientes() {
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [logotipo, setLogotipo] = useState('');
+
+    const [logradouros, setLogradouros]=useState([]);
+
     const router = useRouter();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -35,7 +38,7 @@ export default function Clientes() {
     };
 
     return (
-        <Page titulo="Cadastro de Clientes" subtitulo="Teste" nomeUsuario="Camila Nunes">
+        <Page titulo="Cadastro de Clientes" subtitulo="" nomeUsuario="">
             <div className="mt-6 container mx-auto pt-4 shadow rounded-md bg-slate-50">
                 <Link href="/clientes/listarClientes">
                     <button type="button" className="rounded-md bg-slate-700 px-3 py-2 text-sm font-semibold leading-6 text-white">Voltar</button>  

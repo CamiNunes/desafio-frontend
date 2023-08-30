@@ -71,13 +71,6 @@ export default function Clientes() {
               </tbody>
             </table>
           </div>
-          <div className="grid grid-cols-1 gap-4 md:hidden">
-            <div>
-              <div>
-
-              </div>
-            </div>        
-          </div>
         </div>
       </form>
     </Page>
