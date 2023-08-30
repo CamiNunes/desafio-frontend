@@ -197,7 +197,7 @@ export default function EditarCliente() {
                                             </div>
                                         </div>
                                         <div className="sm:col-span-2">
-                                            <label htmlFor="razao-social" className="block text-sm font-medium leading-6 text-gray-900">Tipo</label>
+                                            <label htmlFor="tipo" className="block text-sm font-medium leading-6 text-gray-900">Tipo</label>
                                             <div className="mt-2">
                                             <select
                                                 id="tipo"
@@ -215,12 +215,12 @@ export default function EditarCliente() {
                                             </div>
                                         </div>
                                         <div className="sm:col-span-6">
-                                            <label htmlFor="razao-social" className="block text-sm font-medium leading-6 text-gray-900">Endereço</label>
+                                            <label htmlFor="endereco" className="block text-sm font-medium leading-6 text-gray-900">Endereço</label>
                                             <div className="mt-2">
                                                 <input
                                                     type="text"
-                                                    name="nome"
-                                                    id="nome"
+                                                    name="endereco"
+                                                    id="endereco"
                                                     value={endereco}
                                                     onChange={(e) => setEndereco(e.target.value)}
                                                     autoComplete="nome"
