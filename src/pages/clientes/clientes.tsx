@@ -11,8 +11,6 @@ export default function Clientes() {
     const [email, setEmail] = useState('');
     const [logotipo, setLogotipo] = useState('');
 
-    const [logradouros, setLogradouros]=useState([]);
-
     const router = useRouter();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

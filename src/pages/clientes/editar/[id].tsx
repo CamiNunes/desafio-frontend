@@ -13,6 +13,15 @@ export default function EditarCliente() {
     const { id } = router.query;
     const [registro, setRegistro] = useState<any>(null); // Defina o tipo adequado para o seu registro
     const [modalOpen, setModalOpen] = useState(false);
+
+    const [clienteId, setClienteId] = useState('');
+    const [cep, setCep] = useState('');
+    const [tipo, setTipo] = useState('');
+    const [endereco, setEndereco] = useState('');
+    const [numero, setNumero] = useState('');
+    const [bairro, setBairro] = useState('');
+    const [cidade, setCidade] = useState('');
+    const [uf, setUf] = useState('');
     
     const openModal = () => {
         setModalOpen(true);
@@ -66,6 +75,29 @@ export default function EditarCliente() {
     if (!registro) {
         return <div>Carregando...</div>;
     }
+
+    const handleSubmitEndereco = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+    const logradouro = {
+        clienteId,
+        cep, 
+        tipo, 
+        endereco,
+        numero,
+        bairro,
+        cidade,
+        uf
+    }
+
+    try {
+      const response = await api.post('/api/Logradouros', logradouro);
+      toast.success(`Registro salvo com sucesso.`);
+      console.log(logradouro);
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao salvar registro.");
+    }};
 
     return (
     <Page titulo="Editar Cliente" subtitulo="" nomeUsuario="">
@@ -141,23 +173,25 @@ export default function EditarCliente() {
                 </div>
 
                 <h4 className="border-b text-lg font-semibold mb-3">Endereços</h4>
-
                 <button type="button" className="rounded-md bg-slate-700 px-3 py-2 text-sm font-semibold leading-6 text-white" onClick={openModal}>Novo Endereço</button>     
+                <GridEnderecos clienteId={id}/>
+
                 <Modal isOpen={modalOpen} onClose={closeModal}>
-                    
                     <div className="mt-6 container mx-auto pt-4 shadow rounded-md bg-slate-50">
-                        <form className="max-w-full mx-auto">
+                        <form onSubmit={handleSubmitEndereco} className="max-w-full mx-auto">
                             <div className="space-y-12">
                                 <div className="">
                                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12">
                                         <div className="sm:col-span-2">
                                             <label htmlFor="razao-social" className="block text-sm font-medium leading-6 text-gray-900">Cep</label>
                                             <div className="mt-2">
-                                                <input
+                                                <InputMask mask="99.999-999"
+                                                    id="cep"
+                                                    name="cep"
                                                     type="text"
-                                                    name="razao-social"
-                                                    id="razao-social"
-                                                    autoComplete="given-name"
+                                                    value={cep}
+                                                    onChange={(e) => setCep(e.target.value)}
+                                                    autoComplete="cep"
                                                     className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                 />
                                             </div>
@@ -165,13 +199,19 @@ export default function EditarCliente() {
                                         <div className="sm:col-span-2">
                                             <label htmlFor="razao-social" className="block text-sm font-medium leading-6 text-gray-900">Tipo</label>
                                             <div className="mt-2">
-                                                <input
-                                                    type="text"
-                                                    name="razao-social"
-                                                    id="razao-social"
-                                                    autoComplete="given-name"
-                                                    className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                                />
+                                            <select
+                                                id="tipo"
+                                                name="tipo"
+                                                value={tipo}
+                                                onChange={(e) => setTipo(e.target.value)}
+                                                autoComplete="tipo"
+                                                className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                                >
+                                                <option value="Selecione uma Cidade">Selecione um Tipo</option>
+                                                <option>Av.</option>
+                                                <option>Rua</option>
+                                                <option>Travessa</option>
+                                            </select>
                                             </div>
                                         </div>
                                         <div className="sm:col-span-6">
@@ -181,6 +221,8 @@ export default function EditarCliente() {
                                                     type="text"
                                                     name="nome"
                                                     id="nome"
+                                                    value={endereco}
+                                                    onChange={(e) => setEndereco(e.target.value)}
                                                     autoComplete="nome"
                                                     className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                 />
@@ -190,9 +232,11 @@ export default function EditarCliente() {
                                             <label htmlFor="razao-social" className="block text-sm font-medium leading-6 text-gray-900">Número</label>
                                             <div className="mt-2">
                                                 <input
-                                                    type="email"
-                                                    name="email"
-                                                    id="email"
+                                                    type="text"
+                                                    name="numero"
+                                                    id="numero"
+                                                    value={numero}
+                                                    onChange={(e) => setNumero(e.target.value)}
                                                     autoComplete="email"
                                                     className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                 />
@@ -203,8 +247,10 @@ export default function EditarCliente() {
                                             <div className="mt-2">
                                                 <input
                                                     type="text"
-                                                    name="logotipo"
-                                                    id="logotipo"
+                                                    name="bairro"
+                                                    id="bairro"
+                                                    value={bairro}
+                                                    onChange={(e) => setBairro(e.target.value)}
                                                     autoComplete="logotipo"
                                                     className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                 />
@@ -215,9 +261,11 @@ export default function EditarCliente() {
                                             <div className="mt-2">
                                                 <input
                                                     type="text"
-                                                    name="logotipo"
-                                                    id="logotipo"
-                                                    autoComplete="logotipo"
+                                                    name="cidade"
+                                                    id="cidade"
+                                                    value={cidade}
+                                                    onChange={(e) => setCidade(e.target.value)}
+                                                    autoComplete="cidade"
                                                     className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                 />
                                             </div>
@@ -227,9 +275,11 @@ export default function EditarCliente() {
                                             <div className="mt-2">
                                                 <input
                                                     type="text"
-                                                    name="logotipo"
-                                                    id="logotipo"
-                                                    autoComplete="logotipo"
+                                                    name="estado"
+                                                    id="estado"
+                                                    value={uf}
+                                                    onChange={(e) => setUf(e.target.value)}
+                                                    autoComplete="estado"
                                                     className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                 />
                                             </div>
@@ -238,13 +288,11 @@ export default function EditarCliente() {
                                 </div>
                             </div>
                             <div className="mt-6 mb-3 pb-3 flex items-center justify-end gap-x-6">
-                                {/* <button type="button" className="bg-red-900 hover:bg-red-700 text-white text-sm font-semibold py-2 px-4 rounded">Cancelar</button> */}
                                 <button type="submit" className="bg-sky-800 hover:bg-sky-600 text-white text-sm font-semibold py-2 px-4 rounded">Salvar</button>
                             </div>
                         </form>
                     </div>
                 </Modal>
-                <GridEnderecos clienteId={id}/>
             </form>
         </div>         
     </Page>
