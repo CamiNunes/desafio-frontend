@@ -1,7 +1,18 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+// const nextConfig = {}
 
-module.exports = nextConfig
+// module.exports = nextConfig
+
+module.exports = {
+    async rewrites() {
+      return [
+        {
+          source: '/:clienteId/:logradouroId',
+          destination: '/logradouros/editarLogradouro',
+        },
+      ];
+    },
+  };
 
 
 // const path = require('path');

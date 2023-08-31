@@ -1,32 +1,30 @@
 import Page from "@/components/Page";
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import api from '../../../api';
+import api from '../../../../api';
 import InputMask from "react-input-mask";
 import { toast } from "react-toastify";
 import Link from "next/link";
-import GridEnderecos from "@/components/GridEnderecos";
-import Modal from "@/components/Modal";
 
 export default function EditarCliente() {
     const router = useRouter();
-    const { id } = router.query;
+    const { clienteId, logradouroId } = router.query;
     const [registro, setRegistro] = useState<any>(null); // Defina o tipo adequado para o seu registro
 
     useEffect(() => {
         const fetchRegistro = async () => {
             try {
-                const response = await api.get(`/api/Clientes/` + id); 
+                const response = await api.get(`/api/Logradouros/` + clienteId); 
                 setRegistro(response.data.result);
             } catch (error) {
             console.error('Erro ao obter os dados do registro:', error);
             }};
 
-            if (id) {
+            if (clienteId) {
                 fetchRegistro();
             }
 
-        }, [id]
+        }, [clienteId, logradouroId]
     );
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,11 +37,11 @@ export default function EditarCliente() {
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        api.put(`/api/Clientes/${id}`, registro)
+        api.put(`/api/Logradouros/${clienteId}`, registro)
         .then(() => {
             console.log(registro);
             toast.success("Registro atualizado com sucesso.")
-            router.push(`/clientes/editar/${id}`);
+            router.push(`/clientes/editar/${clienteId}`);
         })
         .catch((error) => {
             toast.error('Erro ao atualizar registro:', error);
@@ -51,7 +49,7 @@ export default function EditarCliente() {
     };  
 
     async function handleCancel (){
-        router.push(`/clientes/editar/${id}`);
+        router.push(`/clientes/editar/${clienteId}`);
     };
 
     if (!registro) {
@@ -61,7 +59,7 @@ export default function EditarCliente() {
     return (
         <Page titulo="Cadastro de Clientes" subtitulo="" nomeUsuario="">
             <div className="mt-6 container mx-auto pt-4 shadow rounded-md bg-slate-50">
-                <Link href={`/clientes/editar/${id}`}>
+                <Link href={`/clientes/editar/${clienteId}`}>
                     <button type="button" className="rounded-md bg-slate-700 px-3 py-2 text-sm font-semibold leading-6 text-white">Voltar</button>  
                 </Link>
                 <form onSubmit={handleSubmit} className="max-w-full mx-auto">
@@ -75,8 +73,7 @@ export default function EditarCliente() {
                                             type="text"
                                             name="clienteId"
                                             id="clienteId"
-                                            value={id}
-                                            onChange={(e) => setClienteId(e.target.value)}
+                                            value={registro.clienteId}
                                             autoComplete="given-name"
                                             className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
@@ -89,8 +86,8 @@ export default function EditarCliente() {
                                             id="cep"
                                             name="cep"
                                             type="text"
-                                            value={cep}
-                                            onChange={(e) => setCep(e.target.value)}
+                                            defaultValue={registro.cep}
+                                            onChange={handleInputChange}
                                             autoComplete="cep"
                                             className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
@@ -102,8 +99,7 @@ export default function EditarCliente() {
                                     <select
                                         id="tipo"
                                         name="tipo"
-                                        value={tipo}
-                                        onChange={(e) => setTipo(e.target.value)}
+                                        defaultValue={registro.tipo}
                                         autoComplete="tipo"
                                         className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                         >
@@ -121,8 +117,8 @@ export default function EditarCliente() {
                                             type="text"
                                             name="endereco"
                                             id="endereco"
-                                            value={endereco}
-                                            onChange={(e) => setEndereco(e.target.value)}
+                                            defaultValue={registro.endereco}
+                                            onChange={handleInputChange}
                                             autoComplete="nome"
                                             className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
@@ -135,8 +131,8 @@ export default function EditarCliente() {
                                             type="text"
                                             name="numero"
                                             id="numero"
-                                            value={numero}
-                                            onChange={(e) => setNumero(e.target.value)}
+                                            defaultValue={registro.numero}
+                                            onChange={handleInputChange}
                                             autoComplete="email"
                                             className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
@@ -149,8 +145,8 @@ export default function EditarCliente() {
                                             type="text"
                                             name="complemento"
                                             id="complemento"
-                                            value={complemento}
-                                            onChange={(e) => setComplemento(e.target.value)}
+                                            defaultValue={registro.complemento}
+                                            onChange={handleInputChange}
                                             autoComplete="email"
                                             className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
@@ -163,8 +159,8 @@ export default function EditarCliente() {
                                             type="text"
                                             name="bairro"
                                             id="bairro"
-                                            value={bairro}
-                                            onChange={(e) => setBairro(e.target.value)}
+                                            defaultValue={registro.bairro}
+                                            onChange={handleInputChange}
                                             autoComplete="logotipo"
                                             className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
@@ -177,8 +173,8 @@ export default function EditarCliente() {
                                             type="text"
                                             name="cidade"
                                             id="cidade"
-                                            value={cidade}
-                                            onChange={(e) => setCidade(e.target.value)}
+                                            defaultValue={registro.cidade}
+                                            onChange={handleInputChange}
                                             autoComplete="cidade"
                                             className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
@@ -191,8 +187,8 @@ export default function EditarCliente() {
                                             type="text"
                                             name="estado"
                                             id="estado"
-                                            value={uf}
-                                            onChange={(e) => setUf(e.target.value)}
+                                            defaultValue={registro.uf}
+                                            onChange={handleInputChange}
                                             autoComplete="estado"
                                             className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
