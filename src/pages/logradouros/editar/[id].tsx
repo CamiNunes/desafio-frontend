@@ -1,54 +1,62 @@
 import Page from "@/components/Page";
 import { useRouter } from 'next/router';
-import { useState } from "react";
-import api from '../../api';
-import Link from "next/link";
+import { useEffect, useState } from 'react';
+import api from '../../../api';
 import InputMask from "react-input-mask";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import Link from "next/link";
+import GridEnderecos from "@/components/GridEnderecos";
+import Modal from "@/components/Modal";
 
-export default function Logradouros() {
+export default function EditarCliente() {
     const router = useRouter();
     const { id } = router.query;
+    const [registro, setRegistro] = useState<any>(null); // Defina o tipo adequado para o seu registro
 
-    const [clienteId, setClienteId] = useState(id);
-    const [cep, setCep] = useState('');
-    const [tipo, setTipo] = useState('');
-    const [endereco, setEndereco] = useState('');
-    const [numero, setNumero] = useState('');
-    const [complemento, setComplemento] = useState('');
-    const [bairro, setBairro] = useState('');
-    const [cidade, setCidade] = useState('');
-    const [uf, setUf] = useState('');
+    useEffect(() => {
+        const fetchRegistro = async () => {
+            try {
+                const response = await api.get(`/api/Clientes/` + id); 
+                setRegistro(response.data.result);
+            } catch (error) {
+            console.error('Erro ao obter os dados do registro:', error);
+            }};
 
-    const handleSubmit = async (event: React.FormEvent) => {
+            if (id) {
+                fetchRegistro();
+            }
+
+        }, [id]
+    );
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } : any = event.target;
+        setRegistro((prevData: any) => ({
+          ...prevData,
+          [name]: value,
+        }));
+    };
+
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-
-    const logradouro = {
-        clienteId,
-        cep, 
-        tipo, 
-        endereco,
-        numero,
-        complemento,
-        bairro,
-        cidade,
-        uf
-    }
-
-    try {
-      const response = await api.post('/api/Logradouros', logradouro);
-      toast.success(`Registro salvo com sucesso.`);
-      console.log(logradouro);
-    } catch (error) {
-      console.error(error);
-      toast.error("Erro ao salvar registro.");
-    }};
-
+        api.put(`/api/Clientes/${id}`, registro)
+        .then(() => {
+            console.log(registro);
+            toast.success("Registro atualizado com sucesso.")
+            router.push(`/clientes/editar/${id}`);
+        })
+        .catch((error) => {
+            toast.error('Erro ao atualizar registro:', error);
+        });
+    };  
 
     async function handleCancel (){
         router.push(`/clientes/editar/${id}`);
-        console.log(`/clientes/editar/${id}`);
     };
+
+    if (!registro) {
+        return <div>Carregando...</div>;
+    }
 
     return (
         <Page titulo="Cadastro de Clientes" subtitulo="" nomeUsuario="">
@@ -200,5 +208,5 @@ export default function Logradouros() {
                 </form>
             </div>     
         </Page>
-    )
-}
+    );
+};
