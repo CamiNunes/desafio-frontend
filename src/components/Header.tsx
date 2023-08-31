@@ -1,6 +1,3 @@
-// import { redirect } from 'next/navigation';
-//import { useRouter } from 'next/router';
-
 import Link from "next/link"
 
 interface HeaderProps {
@@ -10,13 +7,10 @@ interface HeaderProps {
   className?: string
 }
 
-export default function Header(props: HeaderProps) {
-
-  //const router = useRouter();
-  
+export default function Header(props: HeaderProps) {  
   // const handleLogout = (event: React.FormEvent) => {
   //   event.preventDefault();
-  //   localStorage.removeItem('jwtToken');
+  //   localStorage.removeItem('jwt-Token');
   //   window.location.href = '/login';
   // };  
 
@@ -29,7 +23,7 @@ export default function Header(props: HeaderProps) {
           <h1 className="text-xl font-black">{props.titulo}</h1>
           <h2 className="text-sm text-zinc-400">{props.subtitulo}</h2>
           <div className="flex flex-row justify-center items-center px-5 mx-5">
-            <Link href={'/login'} type="button" className="rounded-md bg-zinc-200 px-3 py-3 text-sm font-semibold text-black shadow-sm hover:bg-zinc-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-600" >Sair</Link>
+            <button type="button" className="rounded-md bg-zinc-200 px-3 py-3 text-sm font-semibold text-black shadow-sm hover:bg-zinc-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-600">Sair</button>
           </div>
       </div>
   )

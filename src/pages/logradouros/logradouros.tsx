@@ -39,7 +39,6 @@ export default function Logradouros() {
       const response = await api.post('/api/Logradouros', logradouro);
       toast.success(`Registro salvo com sucesso.`);
       router.push(`/clientes/editar/${id}`);
-      console.log(logradouro);
     } catch (error) {
       console.error(error);
       toast.error("Erro ao salvar registro.");
@@ -48,7 +47,6 @@ export default function Logradouros() {
 
     async function handleCancel (){
         router.push(`/clientes/editar/${id}`);
-        console.log(`/clientes/editar/${id}`);
     };
 
     return (

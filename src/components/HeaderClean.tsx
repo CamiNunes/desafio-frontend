@@ -1,8 +1,3 @@
-// import { redirect } from 'next/navigation';
-//import { useRouter } from 'next/router';
-
-import Link from "next/link"
-
 interface HeaderProps {
   titulo: string
   subtitulo: string
@@ -10,15 +5,6 @@ interface HeaderProps {
 }
 
 export default function HeaderClean(props: HeaderProps) {
-
-  //const router = useRouter();
-  
-  // const handleLogout = (event: React.FormEvent) => {
-  //   event.preventDefault();
-  //   localStorage.removeItem('jwtToken');
-  //   window.location.href = '/login';
-  // };  
-
   return (
       <div className={`
           flex flex-row justify-between items-center px-5
