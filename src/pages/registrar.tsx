@@ -3,11 +3,13 @@ import PageClean from "@/components/PageClean";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useRouter } from 'next/router';
 
 export default function Registrar() {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -22,6 +24,7 @@ export default function Registrar() {
       const response = await api.post('/api/Usuarios/register', usuario);
       console.log(response.data);
       toast.success("Usuário criado com sucesso.");
+      router.push('/login');
     } catch (error) {
       console.error(error);
     }

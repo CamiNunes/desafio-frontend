@@ -22,8 +22,8 @@ export default function Login() {
       const response = await api.post('/api/Usuarios/login', login);
       console.log(response.data);
       toast.success("Usuário logado com sucesso.");
-      const { token } = response.data;
-      localStorage.setItem('jwtToken', token);
+      // const { token } = response.data;
+      // localStorage.setItem('jwtToken', token);
       router.push('/');
     } catch (error) {
       toast.error("Erro ao efetuar o login.");
