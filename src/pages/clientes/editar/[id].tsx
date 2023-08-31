@@ -14,7 +14,7 @@ export default function EditarCliente() {
     const [registro, setRegistro] = useState<any>(null); // Defina o tipo adequado para o seu registro
     const [modalOpen, setModalOpen] = useState(false);
 
-    const [clienteId, setClienteId] = useState('');
+    const [clienteId, setClienteId] = useState(id);
     const [cep, setCep] = useState('');
     const [tipo, setTipo] = useState('');
     const [endereco, setEndereco] = useState('');
@@ -76,7 +76,7 @@ export default function EditarCliente() {
         return <div>Carregando...</div>;
     }
 
-    const handleSubmitEndereco = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmitEndereco = async (event: React.FormEvent) => {
         event.preventDefault();
 
     const logradouro = {
@@ -182,8 +182,22 @@ export default function EditarCliente() {
                             <div className="space-y-12">
                                 <div className="">
                                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12">
+                                        <div className="sm:col-span-3" hidden>
+                                            <label htmlFor="clienteId" className="block text-sm font-medium leading-6 text-gray-900">Código</label>
+                                            <div className="mt-2">
+                                                <input
+                                                    type="text"
+                                                    name="clienteId"
+                                                    id="clienteId"
+                                                    value={registro.clienteId}
+                                                    onChange={(e) => setClienteId(e.target.value)}
+                                                    autoComplete="given-name"
+                                                    className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                                />
+                                            </div>
+                                        </div>
                                         <div className="sm:col-span-2">
-                                            <label htmlFor="razao-social" className="block text-sm font-medium leading-6 text-gray-900">Cep</label>
+                                            <label htmlFor="cep" className="block text-sm font-medium leading-6 text-gray-900">Cep</label>
                                             <div className="mt-2">
                                                 <InputMask mask="99.999-999"
                                                     id="cep"
