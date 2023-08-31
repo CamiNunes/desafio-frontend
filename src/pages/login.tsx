@@ -3,6 +3,7 @@ import api from "@/api";
 import { useState } from 'react';
 import { toast } from "react-toastify";
 import { useRouter } from 'next/router';
+import Link from "next/link";
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -69,6 +70,7 @@ export default function Login() {
               <button type="submit" className="rounded-md bg-slate-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:bg-slate-700">Entrar</button>  
               <button type="button" className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Cancelar</button>
             </div>
+            <p className="mt-3 text-sm text-center">Não tem uma conta? <Link href={'/registrar'} className="text-red-500 font-semibold hover:text-red-900">Registrar-se</Link></p>
           </div>
         </div>
       </form>

@@ -1,5 +1,6 @@
 import api from "@/api";
 import PageClean from "@/components/PageClean";
+import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -81,6 +82,7 @@ export default function Registrar() {
               <button type="submit" className="rounded-md bg-slate-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:bg-slate-700">Salvar</button>   
               <button type="button" className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Cancelar</button>
             </div>
+            <p className="mt-3 text-sm text-center">Já tem uma conta? Faça o  <Link href={'/login'} className="text-red-500 font-semibold hover:text-red-900">Login</Link></p>
           </div>
         </div>
       </form>
