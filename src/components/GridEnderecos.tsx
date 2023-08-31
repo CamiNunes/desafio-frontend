@@ -3,9 +3,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import InputMask from "react-input-mask";
+import { useRouter } from 'next/router';
 
 export default function GridEnderecos ({ clienteId } : any){
     const [logradouros, setLogradouros]=useState([]);
+    const router = useRouter();
 
     async function getEnderecos(){
         const response = await api.get(`/api/Logradouros/` + clienteId)
@@ -20,11 +22,9 @@ export default function GridEnderecos ({ clienteId } : any){
         const response = await api.delete('/api/Logradouros/' + clienteId + '/' + logradouroId )
         .then(response => {
             setLogradouros(response.data.result);
-          toast.success("Registro deletado com sucesso.", response.data)
-        
-      }).catch(error => {
-        
-      })
+            toast.success("Registro deletado com sucesso.", response.data)
+            router.push(`/clientes/editar?id=${clienteId}`);
+      }).catch(error => {})
     }
 
     useEffect(() => {
@@ -41,6 +41,7 @@ export default function GridEnderecos ({ clienteId } : any){
                     <th className="p-3 text-sm font-semibold tracking-wide ext-left">Tipo</th>
                     <th className="p-3 text-sm font-semibold tracking-wide ext-left">Endereço</th>
                     <th className="p-3 text-sm font-semibold tracking-wide ext-left">Número</th>
+                    <th className="p-3 text-sm font-semibold tracking-wide ext-left">Complemento</th>
                     <th className="p-3 text-sm font-semibold tracking-wide ext-left">Bairro</th>
                     <th className="p-3 text-sm font-semibold tracking-wide ext-left">Cidade</th>
                     <th className="p-3 text-sm font-semibold tracking-wide ext-left">UF</th>
@@ -56,6 +57,7 @@ export default function GridEnderecos ({ clienteId } : any){
                         <td className="text-left w-auto p-3 text-sm text-gray-700 whitespace-nowrap">{logradouro.tipo}</td>
                         <td className="text-left w-auto p-3 text-sm text-gray-700 whitespace-nowrap">{logradouro.endereco}</td>
                         <td className="text-left w-auto p-3 text-sm text-gray-700 whitespace-nowrap">{logradouro.numero}</td>
+                        <td className="text-left w-auto p-3 text-sm text-gray-700 whitespace-nowrap">{logradouro.complemento}</td>
                         <td className="text-left w-auto p-3 text-sm text-gray-700 whitespace-nowrap">{logradouro.bairro}</td>
                         <td className="text-left w-auto p-3 text-sm text-gray-700 whitespace-nowrap">{logradouro.cidade}</td>
                         <td className="text-left w-auto p-3 text-sm text-gray-700 whitespace-nowrap">{logradouro.uf}</td>

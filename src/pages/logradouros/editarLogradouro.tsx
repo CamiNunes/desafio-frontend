@@ -15,7 +15,7 @@ const EditarLogradouro = () => {
       const fetchRegistro = async () => {
           try {
               const response = await api.get(`/api/Logradouros/` + clienteId); 
-              setRegistro(response.data.result);
+              setRegistro(response.data.result[0]);
           } catch (error) {
           console.error('Erro ao obter os dados do registro:', error);
           }};
@@ -37,7 +37,7 @@ const EditarLogradouro = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
       event.preventDefault();
-      api.put(`/api/Logradouros/${clienteId}`, registro)
+      api.put(`/api/Logradouros/${clienteId}/${logradouroId}`, registro)
       .then(() => {
           console.log(registro);
           toast.success("Registro atualizado com sucesso.")

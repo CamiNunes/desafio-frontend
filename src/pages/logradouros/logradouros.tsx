@@ -198,10 +198,6 @@ export default function Logradouros() {
                         <button type="button" onClick={handleCancel} className="bg-red-900 hover:bg-red-700 text-white text-sm font-semibold py-2 px-4 rounded">Cancelar</button>
                         <button type="submit" className="bg-sky-800 hover:bg-sky-600 text-white text-sm font-semibold py-2 px-4 rounded">Salvar</button>
                     </div>
-                    <div>
-                    <h1>Minha Página</h1>
-                        <Link href="/CEE39C41-2ABE-40D1-96CD-68945717F30E/50D37543-D7E6-4288-9166-48D915508B35">Editar Logradouro 123 do Cliente 1</Link>
-                    </div>
                 </form>
             </div>     
         </Page>
