@@ -82,6 +82,49 @@ Para rodar o projeto no banco de dados SQL:
     REFERENCES [dbo].[Clientes] ([ClienteId])
     GO
 --------------
+
+    SET ANSI_NULLS ON
+    GO
+
+    SET QUOTED_IDENTIFIER ON
+    GO
+
+    CREATE TABLE [dbo].[usuarios](
+        [UsuarioId] [uniqueidentifier] NOT NULL,
+        [Nome] [varchar](200) NOT NULL,
+        [Email] [varchar](250) NOT NULL,
+        [SenhaHash] [varchar](250) NOT NULL
+    PRIMARY KEY CLUSTERED 
+    (
+        [UsuarioId] ASC
+    )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+    GO
+
+    ALTER TABLE [dbo].[usuarios] ADD  DEFAULT (newid()) FOR [UsuarioId]
+    GO
+
+--------------
+
+    SET ANSI_NULLS ON
+    GO
+
+    SET QUOTED_IDENTIFIER ON
+    GO
+
+    Create PROCEDURE [dbo].[InsertUsuario]
+        @UsuarioId UNIQUEIDENTIFIER,
+        @Nome NVARCHAR(250),
+        @Email NVARCHAR(250),
+        @SenhaHash NVARCHAR(255)
+    AS
+    BEGIN
+        INSERT INTO Usuarios (Nome, Email, SenhaHash)
+        VALUES (@Nome, @Email, @SenhaHash)
+    END
+    GO
+
+--------------
     SET ANSI_NULLS ON
     GO
 

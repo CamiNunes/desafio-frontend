@@ -13,23 +13,45 @@ export default function Clientes() {
 
     const router = useRouter();
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
 
-    const cliente = {
-        nome, 
-        email, 
-        logotipo
-    }
+        const cliente = {
+            nome, 
+            email, 
+            logotipo
+        }
 
-    try {
-      const response = await api.post('/api/Clientes', cliente);
-      toast.success(`Cliente  ${cliente.nome}  salvo com sucesso.`);
-      router.push("/clientes/listarClientes");
-    } catch (error) {
-      console.error(error);
-      toast.error("Erro ao salvar cliente: " + cliente.nome);
-    }};
+        api.post('/api/Clientes', cliente)
+        .then(() => {
+            console.log(cliente);
+            toast.success("Registro cadastrado com sucesso.")
+            router.push("/clientes/listarClientes");
+        })
+        .catch((error) => {
+            //toast.error('Erro ao cadastrar registro:', error);
+        });
+    };  
+
+
+    // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    //     event.preventDefault();
+
+    // const cliente = {
+    //     nome, 
+    //     email, 
+    //     logotipo
+    // }
+
+    // try {
+    //   const response = await api.post('/api/Clientes', cliente);
+    //     toast.success(`Cliente  ${cliente.nome}  salvo com sucesso.`);
+    //     router.push("/clientes/listarClientes");
+    //     console.log(cliente);
+    // } catch (error) {
+    //   console.log(cliente);
+    //   toast.error("Erro ao salvar cliente: " + cliente.nome + " " + error);
+    // }};
 
     async function handleCancel (){
         router.push(`/clientes/listarClientes`);
