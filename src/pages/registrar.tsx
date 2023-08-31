@@ -29,7 +29,7 @@ export default function Registrar() {
   return (
     <PageClean  titulo="" subtitulo="">
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
-        <div className="border-2 border-teal-700 space-y-12 py-10 px-24 rounded-2xl mt-20">
+        <div className="border-2 border-slate-700 space-y-12 py-10 px-24 rounded-2xl mt-20">
           <div className=" pb-12">
             <p className="text-center">Crie um usuário</p>
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12">
@@ -77,9 +77,9 @@ export default function Registrar() {
                   </div>
               </div>
             </div>
-            <div className="mt-6 grid grid-cols gap-3">
-              <button type="submit" className="rounded-md bg-teal-900 px-3 py-2 text-lg font-semibold text-white shadow-sm hover:bg-teal-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600">Salvar</button>  
-              <button type="button" className="rounded-md bg-red-600 px-3 py-2 text-lg font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Cancelar</button>
+            <div className="mt-6 grid grid-cols gap-3"> 
+              <button type="submit" className="rounded-md bg-slate-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:bg-slate-700">Salvar</button>   
+              <button type="button" className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Cancelar</button>
             </div>
           </div>
         </div>
